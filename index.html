@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <title>Démineur</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="" alt="logo">
+        </div>
+        <h1>Le Démineur</h1>
+        <div class="logo-container">
+            <img src="" alt="logo">
+        </div>
+    </header>
+    <main>
+        <section id="rulesDisplay">
+            <h2>Les règles</h2>
+            <article>
+                <h3>But du jeu</h3>
+                <p>Il faut révéler toutes les cases de la grille sans jamais retourner l'une de celles qui cache une
+                    mine.</p>
+            </article>
+            <article>
+                <h3>Comment jouer ?</h3>
+                <p>Faire un clic gauche sur une case révèle ce qu'elle cache.</p>
+                <p>Faire un clic droit permet de poser un drapeau sur une case où l'on suspecte la présence d'une mine.
+                </p>
+            </article>
+            <article>
+                <h3>Les différentes cases</h3>
+                <p>Les mines : si vous en révélez une, vous perdez la partie.</p>
+                <p>Les chiffres : ils indiquent combien de mines se trouvent parmi les 8 cases voisines.</p>
+                <p>Les cases vides : en réveler une permet de révéler toutes les cases vides qui sont adjacentes.</p>
+            </article>
+            <h3>Choisissez un niveau de difficulté : </h3>
+            <form id="levelForm">
+                <div class="radio-container">
+                    <label for="easy">Facile</label>
+                    <input type="radio" id="easy" name="level" value="easy">
+                </div>
+                <div class="radio-container">
+                    <label for="medium">Moyen</label>
+                    <input type="radio" id="medium" name="level" value="medium">
+                </div>
+                <div class="radio-container">
+                    <label for="hard">Difficile</label>
+                    <input type="radio" id="hard" name="level" value="hard">
+                </div>
+                <div class="radio-container">
+                    <label for="custom">Personnaliser</label>
+                    <input type="radio" id="custom" name="level" value="custom">
+                </div>
+            </form>
+            <form id="customForm">
+                <h3>Paramètres de la grille</h3>
+                <div>
+                    <div>
+                        <label for="gridWidth">Nombre de colonnes : </label>
+                        <input type="number" id="gridWidth" value="" min="10" max="30">
+                    </div>
+                    <div>
+                        <label for="gridHeight">Nombre de lignes : </label>
+                        <input type="number" id="gridHeight" value="" min="10" max="20">
+                    </div>
+                    <div>
+                        <label for="mineNumber">Nombre de mines : </label>
+                        <input type="number" id="mineNumber" value="" min="10" max="99">
+                    </div>
+                </div>
+            </form>
+            <button id="start">Commencer</button>
+        </section>
+        <div id="gameDisplay">
+            <div id="headBoard">
+                <div id="minesDisplay">000</div>
+                <div id="faceDisplay">
+                    <img src="" alt="face">
+                </div>
+                <div id="timerDisplay">0000</div>
+            </div>
+            <div id="gridDisplay"></div>
+        </div>
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <script src="./assets/scripts/script.js"></script>
+</body>
+
+</html>
