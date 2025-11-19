@@ -3,6 +3,10 @@ let gridHeightSetting = document.querySelector("#gridHeight")
 let mineNumberSetting = document.querySelector("#mineNumber")
 let gridDisplay = document.querySelector("#gridDisplay")
 
+let goodChoiceAudio = new Audio(src = "../assets/sounds/goodchoice.mp3")
+let winAudio = new Audio(src = "../assets/sounds/win.mp3")
+let explosionAudio = new Audio(src = "../assets/sounds/explosion.mp3")
+
 let gridWidth = 0
 let gridHeight = 0
 let gridSize = 0
@@ -10,8 +14,11 @@ let gridCell = 0
 let mineNumber = 0
 let ratio = 0
 let time = 0
+let score = 0
+let goal = 0
 let timeCount
 let selectedSquare
+let face
 
 function settings() {
     let levelSetting = document.querySelector("input[name=level]:checked").value
@@ -58,7 +65,7 @@ function gridCreation() {
         square.setAttribute("id", `square${i}`)
         square.addEventListener("click", () => {
             squareReveal(i)
-        })
+        }, { once: true })
         square.addEventListener("mouseup", (e) => {
             switch (e.button) {
                 case 2:
@@ -150,6 +157,7 @@ function boardFill() {
     let number
     for (let i = 0; i < 9; i++) {
         squaresToFill = document.querySelectorAll(`.mines${i}`)
+        goal += squaresToFill.length * i
         squaresToFill.forEach(element => {
             number = document.createElement("p")
             if (i > 0) {
@@ -205,6 +213,12 @@ function squareReveal(index) {
         emptyCheck(index)
     } else if (selectedSquare.className.includes("mineYes")) {
         endGameLose()
+    } else {
+        goodChoiceAudio.play()
+        score += parseInt(selectedSquare.childNodes[0].textContent)
+        if (score == goal) {
+            endGameWin()
+        }
     }
 }
 
@@ -235,10 +249,23 @@ function timer() {
 }
 
 function endGameLose() {
-    let face
+    explosionAudio.play()
     document.getElementById("faceDisplay").replaceChildren()
     face = document.createElement("img")
     face.setAttribute("src", "../assets/images/lose.png")
+    document.getElementById("faceDisplay").appendChild(face)
+    clearInterval(timeCount)
+    let minesSet = document.querySelectorAll(".mineYes")
+    minesSet.forEach(element => {
+        element.childNodes[0].style.visibility = "visible"
+    })
+}
+
+function endGameWin() {
+    winAudio.play()
+    document.getElementById("faceDisplay").replaceChildren()
+    face = document.createElement("img")
+    face.setAttribute("src", "../assets/images/win.png")
     document.getElementById("faceDisplay").appendChild(face)
     clearInterval(timeCount)
     let minesSet = document.querySelectorAll(".mineYes")
