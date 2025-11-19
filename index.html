@@ -43,15 +43,15 @@
             <form id="levelForm">
                 <div class="radio-container">
                     <label for="easy">Facile</label>
-                    <input type="radio" id="easy" name="level" value="easy">
+                    <input type="radio" id="easy" class="noncustom" name="level" value="easy">
                 </div>
                 <div class="radio-container">
                     <label for="medium">Moyen</label>
-                    <input type="radio" id="medium" name="level" value="medium">
+                    <input type="radio" id="medium" class="noncustom" name="level" value="medium">
                 </div>
                 <div class="radio-container">
                     <label for="hard">Difficile</label>
-                    <input type="radio" id="hard" name="level" value="hard">
+                    <input type="radio" id="hard" class="noncustom" name="level" value="hard">
                 </div>
                 <div class="radio-container">
                     <label for="custom">Personnaliser</label>
@@ -87,6 +87,14 @@
             </div>
             <div id="gridDisplay"></div>
         </div>
+        <dialog>
+            <h4 id="result"></h4>
+            <p id="time"></p>
+            <div class="button-container">
+                <button id="restart">Rejouer</button>
+                <button id="quit">Quitter</button>
+            </div>
+        </dialog>
     </main>
 
     <footer>

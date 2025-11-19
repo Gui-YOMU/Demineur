@@ -14,6 +14,9 @@ let gridCell = 0
 let mineNumber = 0
 let ratio = 0
 let time = 0
+let minutes = 0
+let seconds = 0
+let mineFound = 0
 let score = 0
 let goal = 0
 let timeCount
@@ -92,6 +95,7 @@ function minesCreation() {
             if (random <= ratio && document.getElementById(`square${i}`).childNodes.length == 0 && mineNumberCreation > 0) {
                 mineImage = document.createElement("img")
                 mineImage.setAttribute("src", "../assets/images/mine.png")
+                mineImage.classList.add("mine")
                 document.getElementById(`square${i}`).classList.add("mineYes")
                 document.getElementById(`square${i}`).appendChild(mineImage)
                 mineNumberCreation--
@@ -166,6 +170,7 @@ function boardFill() {
             element.appendChild(number)
         })
     }
+    console.log(goal);
 }
 
 function emptyCheck(index) {
@@ -216,6 +221,8 @@ function squareReveal(index) {
     } else {
         goodChoiceAudio.play()
         score += parseInt(selectedSquare.childNodes[0].textContent)
+        console.log(score);
+        
         if (score == goal) {
             endGameWin()
         }
@@ -224,20 +231,29 @@ function squareReveal(index) {
 
 function flagSet(index) {
     console.log("Drapeau posé !");
-    mineNumber--
-    document.getElementById("minesDisplay").textContent = mineNumber
-    // selectedSquare = document.getElementById(`square${index}`)
-    // let flagsquare = document.createElement("div")
-    // flagsquare.classList.add("flag")
-    // let flagImage = document.createElement("img")
-    // flagImage.setAttribute("src", "../assets/images/flag.png")
-    // flagsquare.appendChild(flagImage)
-    // selectedSquare.appendChild(flagsquare)
+    selectedSquare = document.getElementById(`square${index}`)
+    if (selectedSquare.className.includes("flag")) {
+        selectedSquare.childNodes[1].remove()
+        selectedSquare.childNodes[0].style.display = "block"
+        selectedSquare.classList.remove("flag")
+        mineFound++
+        document.getElementById("minesDisplay").textContent = mineFound
+    } else {
+        selectedSquare.childNodes[0].style.display = "none"
+        let flagsquare = document.createElement("div")
+        selectedSquare.classList.add("flag")
+        let flagImage = document.createElement("img")
+        flagImage.setAttribute("src", "../assets/images/flag.png")
+        flagsquare.appendChild(flagImage)
+        selectedSquare.appendChild(flagsquare)
+        mineFound--
+        document.getElementById("minesDisplay").textContent = mineFound
+    }
 }
 
 function timer() {
-    let minutes = parseInt(time / 60)
-    let seconds = parseInt(time % 60)
+    minutes = parseInt(time / 60)
+    seconds = parseInt(time % 60)
     if (minutes < 10) {
         minutes = `0${minutes}`
     }
@@ -259,6 +275,7 @@ function endGameLose() {
     minesSet.forEach(element => {
         element.childNodes[0].style.visibility = "visible"
     })
+    endGameDisplay("lose")
 }
 
 function endGameWin() {
@@ -272,6 +289,19 @@ function endGameWin() {
     minesSet.forEach(element => {
         element.childNodes[0].style.visibility = "visible"
     })
+    endGameDisplay("win")
+}
+
+function endGameDisplay(condition) {
+    if (condition == "win") {
+        document.getElementById("result").textContent = "Vous avez gagné !"
+        document.getElementById("time").textContent = `Vous avez trouvé toutes les mines en ${minutes} min ${seconds} s !`
+        document.querySelector("dialog").showModal()
+    } else if (condition == "lose") {
+        document.getElementById("result").textContent = "Vous avez perdu !"
+        document.getElementById("time").textContent = `Vous avez explosé au contact d'une mine !`
+        document.querySelector("dialog").showModal()
+    }
 }
 
 document.querySelector("#easy").checked = true
@@ -280,16 +310,11 @@ document.querySelector("#custom").addEventListener("click", () => {
     document.getElementById("customForm").style.display = "flex"
 })
 
-document.querySelector("#easy").addEventListener("click", () => {
-    document.getElementById("customForm").style.display = "none"
-})
-
-document.querySelector("#medium").addEventListener("click", () => {
-    document.getElementById("customForm").style.display = "none"
-})
-
-document.querySelector("#hard").addEventListener("click", () => {
-    document.getElementById("customForm").style.display = "none"
+let noncustom = document.querySelectorAll(".noncustom")
+noncustom.forEach(element => {
+    element.addEventListener("click", () => {
+        document.getElementById("customForm").style.display = "none"
+    })
 })
 
 document.getElementById("start").addEventListener("click", () => {
@@ -297,7 +322,8 @@ document.getElementById("start").addEventListener("click", () => {
     document.getElementById("gameDisplay").style.display = "block"
     settings()
     gridCreation()
-    document.getElementById("minesDisplay").textContent = mineNumber
+    mineFound = mineNumber
+    document.getElementById("minesDisplay").textContent = mineFound
     minesCreation()
     neighbourCheck()
     boardFill()
@@ -305,3 +331,27 @@ document.getElementById("start").addEventListener("click", () => {
     timeCount = setInterval(timer, 1000)
 })
 
+document.getElementById("restart").addEventListener("click", () => {
+    document.querySelector("dialog").close()
+    gridDisplay.replaceChildren()
+    gridCreation()
+    mineFound = mineNumber
+    goal = 0
+    document.getElementById("minesDisplay").textContent = mineFound
+    minesCreation()
+    neighbourCheck()
+    boardFill()
+    score = 0
+    document.getElementById("faceDisplay").replaceChildren()
+    face = document.createElement("img")
+    face.setAttribute("src", "../assets/images/smile.png")
+    document.getElementById("faceDisplay").appendChild(face)
+    clearInterval(timer)
+    time = 0
+    timer()
+    timeCount = setInterval(timer, 1000)
+})
+
+document.getElementById("quit").addEventListener("click", () => {
+    location.reload()
+})
