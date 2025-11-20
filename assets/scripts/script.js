@@ -248,8 +248,6 @@ function squareReveal(index) {
     } else {
         goodChoiceAudio.play()
         score += parseInt(selectedSquare.childNodes[0].textContent)
-        console.log(score);
-
         if (score == goal) {
             endGameWin()
         }
@@ -259,7 +257,6 @@ function squareReveal(index) {
 // Pose et dépose d'un drapeau sur une case
 
 function flagSet(index) {
-    console.log("Drapeau posé !");
     selectedSquare = document.getElementById(`square${index}`)
     if (selectedSquare.className.includes("flag")) {
         selectedSquare.childNodes[1].remove()
