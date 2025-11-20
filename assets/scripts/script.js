@@ -194,8 +194,10 @@ function boardFill() {
 
 function emptyCheck(index) {
     if (index % gridWidth == 0) {
-        if (document.getElementById(`square${index + 1}`) != null) {
-            document.getElementById(`square${index + 1}`).click()
+        for (let i = 1 - gridWidth; i <= 1 + gridWidth; i = i + gridWidth) {
+            if (document.getElementById(`square${index + i}`) != null) {
+                document.getElementById(`square${index + i}`).click()
+            }
         }
         if (document.getElementById(`square${index - gridWidth}`) != null) {
             document.getElementById(`square${index - gridWidth}`).click()
@@ -204,8 +206,10 @@ function emptyCheck(index) {
             document.getElementById(`square${index + gridWidth}`).click()
         }
     } else if (index % gridWidth == gridWidth - 1) {
-        if (document.getElementById(`square${index - 1}`) != null) {
-            document.getElementById(`square${index - 1}`).click()
+        for (let i = -1 - gridWidth; i <= gridWidth - 1; i = i + gridWidth) {
+            if (document.getElementById(`square${index + i}`) != null) {
+                document.getElementById(`square${index + i}`).click()
+            }
         }
         if (document.getElementById(`square${index - gridWidth}`) != null) {
             document.getElementById(`square${index - gridWidth}`).click()
@@ -214,11 +218,13 @@ function emptyCheck(index) {
             document.getElementById(`square${index + gridWidth}`).click()
         }
     } else {
-        if (document.getElementById(`square${index - gridWidth}`) != null) {
-            document.getElementById(`square${index - gridWidth}`).click()
-        }
-        if (document.getElementById(`square${index + gridWidth}`) != null) {
-            document.getElementById(`square${index + gridWidth}`).click()
+        for (let i = gridWidth - 1; i <= gridWidth + 1; i++) {
+            if (document.getElementById(`square${index - i}`) != null) {
+                document.getElementById(`square${index - i}`).click()
+            }
+            if (document.getElementById(`square${index + i}`) != null) {
+                document.getElementById(`square${index + i}`).click()
+            }
         }
         if (document.getElementById(`square${index - 1}`) != null) {
             document.getElementById(`square${index - 1}`).click()
@@ -243,7 +249,7 @@ function squareReveal(index) {
         goodChoiceAudio.play()
         score += parseInt(selectedSquare.childNodes[0].textContent)
         console.log(score);
-        
+
         if (score == goal) {
             endGameWin()
         }
