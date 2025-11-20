@@ -1,11 +1,17 @@
+// Récupération des objets du DOM
+
 let gridWidthSetting = document.querySelector("#gridWidth")
 let gridHeightSetting = document.querySelector("#gridHeight")
 let mineNumberSetting = document.querySelector("#mineNumber")
 let gridDisplay = document.querySelector("#gridDisplay")
 
+// Récupération des fichiers sonores
+
 let goodChoiceAudio = new Audio(src = "../assets/sounds/goodchoice.mp3")
 let winAudio = new Audio(src = "../assets/sounds/win.mp3")
 let explosionAudio = new Audio(src = "../assets/sounds/explosion.mp3")
+
+// Création des variables
 
 let gridWidth = 0
 let gridHeight = 0
@@ -22,6 +28,10 @@ let goal = 0
 let timeCount
 let selectedSquare
 let face
+
+// Création des fonctions
+
+// Implémentation des paramètres définis par l'utilisateur
 
 function settings() {
     let levelSetting = document.querySelector("input[name=level]:checked").value
@@ -48,6 +58,8 @@ function settings() {
             break
     }
 }
+
+// Construction de la grille et attribution des fonctions aux clics droit et gauche
 
 function gridCreation() {
     let square
@@ -85,6 +97,8 @@ function gridCreation() {
     }
 }
 
+// Création des mines à des emplacements aléatoires
+
 function minesCreation() {
     let random = 0
     let mineImage
@@ -103,6 +117,8 @@ function minesCreation() {
         }
     }
 }
+
+// Vérification de l'entourage de chaque case non minée pour leur attribuer une valeur numérique
 
 function neighbourCheck() {
     let neighbourMines = 0
@@ -156,6 +172,8 @@ function neighbourCheck() {
     }
 }
 
+// Remplissage simultané des cases non minées avec la valeur numérique qui leur a été attribuée
+
 function boardFill() {
     let squaresToFill
     let number
@@ -172,6 +190,8 @@ function boardFill() {
     }
     console.log(goal);
 }
+
+// Vérification des cases voisines d'une case vide et simulation d'un clic sur chaque case non minée orthogonalement adjacente
 
 function emptyCheck(index) {
     if (index % gridWidth == 0) {
@@ -210,6 +230,8 @@ function emptyCheck(index) {
     }
 }
 
+// Révélation du contenu d'une case avec vérification des conditions de fin de partie
+
 function squareReveal(index) {
     selectedSquare = document.getElementById(`square${index}`)
     selectedSquare.style.backgroundColor = "lightgrey"
@@ -228,6 +250,8 @@ function squareReveal(index) {
         }
     }
 }
+
+// Pose et dépose d'un drapeau sur une case
 
 function flagSet(index) {
     console.log("Drapeau posé !");
@@ -251,6 +275,8 @@ function flagSet(index) {
     }
 }
 
+// Chronomètre
+
 function timer() {
     minutes = parseInt(time / 60)
     seconds = parseInt(time % 60)
@@ -263,6 +289,8 @@ function timer() {
     document.getElementById("timerDisplay").textContent = `${minutes}:${seconds}`
     time++
 }
+
+// Fin de partie sur défaite
 
 function endGameLose() {
     explosionAudio.play()
@@ -278,6 +306,8 @@ function endGameLose() {
     endGameDisplay("lose")
 }
 
+// Fin de partie sur victoire
+
 function endGameWin() {
     winAudio.play()
     document.getElementById("faceDisplay").replaceChildren()
@@ -292,6 +322,8 @@ function endGameWin() {
     endGameDisplay("win")
 }
 
+// Affichage de la modale selon victoire ou défaite
+
 function endGameDisplay(condition) {
     if (condition == "win") {
         document.getElementById("result").textContent = "Vous avez gagné !"
@@ -303,6 +335,8 @@ function endGameDisplay(condition) {
         document.querySelector("dialog").showModal()
     }
 }
+
+// Cochage automatique d'un paramètre de grille et apparition / disparition des paramètres personnalisés selon besoin
 
 document.querySelector("#easy").checked = true
 
@@ -316,6 +350,8 @@ noncustom.forEach(element => {
         document.getElementById("customForm").style.display = "none"
     })
 })
+
+// Attribution des fonctions aux différents boutons
 
 document.getElementById("start").addEventListener("click", () => {
     document.getElementById("rulesDisplay").style.display = "none"
