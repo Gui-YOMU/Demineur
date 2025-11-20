@@ -129,10 +129,10 @@ function neighbourCheck() {
                     neighbourMines++
                 }
             }
-            if (document.getElementById(`square${i - gridWidth}`) != null && document.getElementById(`square${i - 9}`).childNodes.length == 1) {
+            if (document.getElementById(`square${i - gridWidth}`) != null && document.getElementById(`square${i - gridWidth}`).childNodes.length == 1) {
                 neighbourMines++
             }
-            if (document.getElementById(`square${i + gridWidth}`) != null && document.getElementById(`square${i + 9}`).childNodes.length == 1) {
+            if (document.getElementById(`square${i + gridWidth}`) != null && document.getElementById(`square${i + gridWidth}`).childNodes.length == 1) {
                 neighbourMines++
             }
             document.getElementById(`square${i}`).classList.add(`mines${neighbourMines}`)
@@ -143,10 +143,10 @@ function neighbourCheck() {
                     neighbourMines++
                 }
             }
-            if (document.getElementById(`square${i - gridWidth}`) != null && document.getElementById(`square${i - 9}`).childNodes.length == 1) {
+            if (document.getElementById(`square${i - gridWidth}`) != null && document.getElementById(`square${i - gridWidth}`).childNodes.length == 1) {
                 neighbourMines++
             }
-            if (document.getElementById(`square${i + gridWidth}`) != null && document.getElementById(`square${i + 9}`).childNodes.length == 1) {
+            if (document.getElementById(`square${i + gridWidth}`) != null && document.getElementById(`square${i + gridWidth}`).childNodes.length == 1) {
                 neighbourMines++
             }
             document.getElementById(`square${i}`).classList.add(`mines${neighbourMines}`)
@@ -188,7 +188,6 @@ function boardFill() {
             element.appendChild(number)
         })
     }
-    console.log(goal);
 }
 
 // Vérification des cases voisines d'une case vide et simulation d'un clic sur chaque case non minée orthogonalement adjacente
